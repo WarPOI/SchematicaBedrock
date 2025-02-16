@@ -1,0 +1,17 @@
+{
+  "name": "schematica_bedrock",
+  "version": "1.0.0",
+  "description": "",
+  "license": "ISC",
+  "author": "WarPOI",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "bedrock-protocol": "^3.43.0",
+    "prismarine-nbt": "^2.7.0",
+    "prismarine-schematic": "^1.2.3"
+  }
+}

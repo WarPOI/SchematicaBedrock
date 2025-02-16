@@ -1,0 +1,4 @@
+node_modules/
+schematica/*
+test/
+config.json
