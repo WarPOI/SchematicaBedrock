@@ -32,6 +32,7 @@ class Schematica {
       default:
         if (this.testInterval) {
           clearInterval(this.testInterval);
+          this.testInterval = null
           context.sendTextClient(
             context.player,
             `§4render off`
@@ -40,7 +41,7 @@ class Schematica {
           this.testInterval = setInterval(() => {
             context.fakeEntityManager.renderEntitiesWithinRadius(
               context.authInputDataOld.position,
-              7
+              Number(command[1]) ? Number(command[1]) : 7
             );
           }, 200);
           context.sendTextClient(

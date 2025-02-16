@@ -1,4 +1,6 @@
 node_modules/
+
 schematica/*
+!.gitkeep
 test/
 config.json

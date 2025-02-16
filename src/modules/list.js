@@ -11,8 +11,7 @@ class list {
     const files = fs.readdirSync(path.join(__dirname, "./../../schematica"));
     console.log(files)
     for (const fileName of files) {
-      str += `${fileName}\n`;
-      // console.log(`${module.name} - ${module.description}`);
+      if (fileName !== ".gitkeep")str += `${fileName}\n`;
     }
     context.sendTextClient(context.player, str);
   }
