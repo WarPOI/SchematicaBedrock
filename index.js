@@ -19,7 +19,7 @@ function checkConfigFile() {
     if (!fs.existsSync(configPath)) {
         // Создание файла с дефолтным конфигом
         fs.writeFileSync(configPath, JSON.stringify(defaultConfig, null, 2));
-        console.log('Конфигурационный файл создан. Пожалуйста, заполните config.json и перезапустите программу.');
+        console.log('Configuration file created. Please fill in config.json and restart the program.');
         process.exit(0);
     } else {
         // Чтение данных из конфигурационного файла
@@ -35,7 +35,7 @@ const relay = new Relay(relayConfig)
 relay.connect()
 
 function shutdown() {
-  relay.player?.disconnect("опа, опа, опа, опа,опа, опа, опа");
+  relay.player?.disconnect("disconnect");
 }
 process.on("SIGINT", (s) => {
   shutdown();

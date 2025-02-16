@@ -1,17 +1,17 @@
 const fs = require("fs");
-const path = require('path');
+const path = require("path");
 class list {
   constructor() {
     this.name = "list";
-    this.description = "выводить список всех файлов для .load";
+    this.description = "Display a list of all files for .load";
   }
 
   activate(context) {
-    var str = "Все файлы \n";
+    var str = "All files \n";
     const files = fs.readdirSync(path.join(__dirname, "./../../schematica"));
-    console.log(files)
+    console.log(files);
     for (const fileName of files) {
-      if (fileName !== ".gitkeep")str += `${fileName}\n`;
+      if (fileName !== ".gitkeep") str += `${fileName}\n`;
     }
     context.sendTextClient(context.player, str);
   }

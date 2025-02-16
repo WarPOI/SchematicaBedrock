@@ -31,7 +31,7 @@ class MinecraftRelay {
         this.handlePlayerConnection(this.player);
       });
     } catch (err) {
-      console.error("Ошибка при подключении:", err);
+      console.error("connect error", err);
     }
   }
 
@@ -99,7 +99,6 @@ class MinecraftRelay {
         .trim()
         .split(/\p{Zs}/u)
         .filter(Boolean);
-      console.log("команда", command);
       this.moduleManager.handleCommand(command, this);
     }
   }

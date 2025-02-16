@@ -22,7 +22,7 @@ class ModuleManager {
         }
       }
     } catch (error) {
-      console.error("Ошибка при загрузке модулей:", error.message);
+      console.error("loadModules error", error.message);
     }
   }
 
@@ -33,7 +33,7 @@ class ModuleManager {
     if (module) {
       module.activate(context, command);
     } else {
-      context.sendTextClient(context.player, `команда §l${name}§r не найдена`);
+      context.sendTextClient(context.player, `command §l${name}§r not found`);
     }
   }
 }

@@ -1,22 +1,26 @@
 const path = require("path");
-const fs = require("fs")
+const fs = require("fs");
 const { loadJsonFromFileSync } = require("./../datagenerator/gen");
 const dataBlockJava = loadJsonFromFileSync("./data/dataBlockJava.json");
 class Load {
   constructor() {
     this.name = "load";
-    this.description = "<name files>, загружает схематику";
+    this.description = "<name files>, upload the schematic";
   }
 
   activate(context, command) {
     const nameFies = command[1];
     if (!fs.existsSync(`./schematica/${nameFies}`)) {
-      context.sendTextClient(context.player, `фаил: §l§4${nameFies}§r, не найдень `)
+      context.sendTextClient(
+        context.player,
+        `file: §l§4${nameFies}§r, not found`
+      );
     } else {
       context.nbtParser
         .processJSONData(`./schematica/${nameFies}`)
         .then((mapArpData) => {
-          console.log(mapArpData);
+          context.sendTextClient(context.player, `Loading...`);
+          const startTime = new Date().getTime();
           const positionStart = context.authInputDataOld;
           mapArpData.forEach((item) => {
             const block = dataBlockJava[item.block];
@@ -27,7 +31,16 @@ class Load {
             };
             context.fakeEntityManager.fakeBlockEntity(newPosition, block);
           });
-          context.sendTextClient(context.player, `Загруженно! кординаты §2§lx:${Math.floor(positionStart.position.x)} y:${Math.floor(positionStart.position.y)} z:${Math.floor(positionStart.position.z)}`);
+          const endTime = new Date().getTime();
+          const timeElapsed = endTime - startTime;
+          context.sendTextClient(
+            context.player,
+            `Loaded! Coordinates §2§lx:${Math.floor(
+              positionStart.position.x
+            )} y:${Math.floor(positionStart.position.y)} z:${Math.floor(
+              positionStart.position.z
+            )}§r§8(Time elapsed: ${timeElapsed} ms)`
+          );
         })
         .catch(console.log);
     }

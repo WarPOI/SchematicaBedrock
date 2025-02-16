@@ -3,12 +3,10 @@ const dataBlockJava = loadJsonFromFileSync("./data/dataBlockJava.json");
 class Schematica {
   constructor() {
     this.name = "shem";
-    this.description = "";
+    this.description = "<namber> - Render radius";
   }
 
   activate(context, command) {
-    //context.fakeEntityManager.fakeBlockEntity(context.authInputDataOld.position);
-    console.log("command", command);
     switch (command[1]) {
       case "test":
         context.nbtParser
@@ -32,11 +30,8 @@ class Schematica {
       default:
         if (this.testInterval) {
           clearInterval(this.testInterval);
-          this.testInterval = null
-          context.sendTextClient(
-            context.player,
-            `§4render off`
-          );
+          this.testInterval = null;
+          context.sendTextClient(context.player, `§4render off`);
         } else {
           this.testInterval = setInterval(() => {
             context.fakeEntityManager.renderEntitiesWithinRadius(
@@ -44,10 +39,7 @@ class Schematica {
               Number(command[1]) ? Number(command[1]) : 7
             );
           }, 200);
-          context.sendTextClient(
-            context.player,
-            `§2render on`
-          );
+          context.sendTextClient(context.player, `§2render on`);
         }
 
         break;
