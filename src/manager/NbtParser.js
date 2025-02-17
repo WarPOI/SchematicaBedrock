@@ -1,7 +1,9 @@
 const fs = require("fs");
 const path = require("path");
+const Vec3 = require("vec3");
 
 const nbt = require("prismarine-nbt");
+const { Schematic } = require("prismarine-schematic");
 
 class NbtParser {
   constructor() {}
@@ -47,11 +49,12 @@ class NbtParser {
   }
 
   async processJSONData(filePath) {
-    const jsonData = await this.decodeNBT(filePath);
+    let jsonData;
     const fileExtName = path.extname(filePath);
-    var transformedBlocks
+    var transformedBlocks;
     switch (fileExtName) {
       case ".nbt":
+        jsonData = await this.decodeNBT(filePath);
         const paletteMapping = this.createPaletteMapping(
           jsonData.value.palette.value.value
         );
@@ -61,17 +64,22 @@ class NbtParser {
         );
         return transformedBlocks;
       case ".mcstructure":
-        
-      transformedBlocks = this.convertMcStructure(jsonData);
-      return transformedBlocks
-
+        jsonData = await this.decodeNBT(filePath);
+        transformedBlocks = this.convertMcStructure(jsonData);
+        return transformedBlocks;
+      case ".schematic":
+        const buffer = fs.readFileSync(filePath);
+        const schematic = await Schematic.read(buffer);
+        console.log(schematic);
+        transformedBlocks = this.extractBlocksSchematic(schematic);
+        return transformedBlocks;
       default:
-        console.error(`тип ${fileExtName} не можеть быть обработан`);
+        console.error(`File type ${fileExtName} cannot be processed`);
         break;
     }
   }
-  convertMcStructure(setData) {
-    data = nbt.simplify(setData);
+  convertMcStructure(data) {
+    data = nbt.simplify(data);
     const blocks = data.structure.block_indices[0];
     const palette = data.structure.palette.default.block_palette;
     const result = [];
@@ -90,6 +98,25 @@ class NbtParser {
       }
     }
     return result;
+  }
+  extractBlocksSchematic(schematic) {
+    const blocks = [];
+    for (let y = 0; y < schematic.size.y; y++) {
+      for (let z = 0; z < schematic.size.z; z++) {
+        for (let x = 0; x < schematic.size.x; x++) {
+          const pos = new Vec3(x, y, z);
+          const block = schematic.getBlock(pos);
+          console.log(block.name, pos)
+          if (block.name !== "air") {
+            blocks.push({
+              pos: { x, y, z },
+              block: block.name,
+            });
+          }
+        }
+      }
+    }
+    return blocks;
   }
 }
 

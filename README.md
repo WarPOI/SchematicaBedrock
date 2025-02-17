@@ -25,7 +25,7 @@ SchematicaBedrock is a project designed for working with schematics in the Bedro
 ### Step-by-Step Guide
 
 1. **Prepare the Files**
-   - Place your `.nbt` and `.mcstructure` files into the `schematica` folder within the project directory.
+   - Place your `.schematic`, `.nbt` and `.mcstructure` files into the `schematica` folder within the project directory.
 
 2. **Set Render Radius**
    - In the game, use the command:

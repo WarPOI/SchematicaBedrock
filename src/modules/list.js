@@ -7,9 +7,8 @@ class list {
   }
 
   activate(context) {
-    var str = "All files \n";
     const files = fs.readdirSync(path.join(__dirname, "./../../schematica"));
-    console.log(files);
+    var str = "All files \n";
     for (const fileName of files) {
       if (fileName !== ".gitkeep") str += `${fileName}\n`;
     }

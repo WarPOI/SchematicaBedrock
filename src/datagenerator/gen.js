@@ -7,10 +7,8 @@ function nextUUID() {
     name: Date.now().toString(),
   });
 }
-function generateRuntimeId() {
-  return +Array.from({ length: 7 }, () => Math.floor(Math.random() * 10)).join(
-    ""
-  );
+function generateRuntimeId(length = 7) {
+  return +Array.from({ length }, () => Math.floor(Math.random() * 10)).join("");
 }
 function loadJsonFromFileSync(path) {
   try {

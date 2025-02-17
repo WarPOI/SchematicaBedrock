@@ -38,7 +38,7 @@ class Schematica {
               context.authInputDataOld.position,
               Number(command[1]) ? Number(command[1]) : 7
             );
-          }, 200);
+          }, 500);
           context.sendTextClient(context.player, `§2render on`);
         }
 

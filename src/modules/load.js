@@ -18,11 +18,12 @@ class Load {
     } else {
       context.nbtParser
         .processJSONData(`./schematica/${nameFies}`)
-        .then((mapArpData) => {
+        .then((blockData) => {
           context.sendTextClient(context.player, `Loading...`);
           const startTime = new Date().getTime();
           const positionStart = context.authInputDataOld;
-          mapArpData.forEach((item) => {
+          console.log(blockData)
+          blockData.forEach((item) => {
             const block = dataBlockJava[item.block];
             const newPosition = {
               x: item.pos.x + Math.floor(positionStart.position.x),

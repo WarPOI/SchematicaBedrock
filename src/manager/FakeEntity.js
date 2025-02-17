@@ -8,7 +8,7 @@ class FakeEntityManager {
   }
 
   fakeBlockEntity(position, block = 1) {
-    const entity_id = generateRuntimeId() + 6900000;
+    const entity_id = generateRuntimeId(6) + 69000000;
     let posBlock = {
       x: Math.floor(position.x),
       y: Math.floor(position.y),
@@ -77,9 +77,7 @@ class FakeEntityManager {
       );
 
       if (!isStillVisible) {
-        this.player.queue("remove_entity", {
-          entity_id_self: runtime_id,
-        });
+        this.removeEntity(runtime_id)
         this.renderedEntities.delete(runtime_id);
       }
     });
@@ -203,6 +201,11 @@ class FakeEntityManager {
       slot: 0,
       selected_slot: 0,
       window_id: "inventory",
+    });
+  }
+  removeEntity(entity_id_self){
+    this.player.queue("remove_entity", {
+      entity_id_self,
     });
   }
 }
