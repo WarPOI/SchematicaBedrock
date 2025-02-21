@@ -1,5 +1,5 @@
 const { loadJsonFromFileSync } = require("../datagenerator/gen");
-const dataBlockJava = loadJsonFromFileSync("./data/dataBlockJava.json");
+const dataItem = loadJsonFromFileSync("./data/dataItem.json");
 class Schematica {
   constructor() {
     this.name = "shem";
@@ -15,7 +15,7 @@ class Schematica {
             console.log(mapArpData);
             const positionStart = context.authInputDataOld;
             mapArpData.forEach((item) => {
-              const block = dataBlockJava[item.block];
+              const block = dataItem[item.block];
               const newPosition = {
                 x: item.pos.x + Math.floor(positionStart.position.x),
                 y: item.pos.y + Math.floor(positionStart.position.y),
