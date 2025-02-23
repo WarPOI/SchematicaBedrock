@@ -5,16 +5,13 @@ class Clear {
   }
 
   activate(context) {
-    context.fakeEntityManager.renderedEntities.forEach((runtime_id) => {
-      context.fakeEntityManager.removeEntity(runtime_id);
-    });
+    const lengthFake = context.fakeEntityManager.clearData()
     context.sendTextClient(
       context.player,
       `Clear §4${
-        Object.keys(context.fakeEntityManager.fakeEntities).length
+        Object.keys(lengthFake).length
       }§r block`
     );
-    context.fakeEntityManager.fakeEntities = {};
   }
 }
 

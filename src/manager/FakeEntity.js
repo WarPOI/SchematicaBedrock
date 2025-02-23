@@ -4,7 +4,7 @@ class FakeEntityManager {
   constructor(player) {
     this.player = player;
     this.fakeEntities = {};
-    this.renderedEntities = new Set(); 
+    this.renderedEntities = new Set();
   }
 
   fakeBlockEntity(position, block = 1) {
@@ -59,28 +59,27 @@ class FakeEntityManager {
       centerPosition,
       radius
     );
-
-    visibleEntities.forEach(({ runtime_id, position, block }) => {
+    for (const { runtime_id, position, block } of visibleEntities) {
       if (!this.renderedEntities.has(runtime_id)) {
         this.fakeAddEntity(runtime_id, position);
         this.fakeMobEquipment(runtime_id, block, -593390456);
         setTimeout(() => {
           this.applyAnimations(runtime_id);
-        }, 350);
+        }, 250);
 
         this.renderedEntities.add(runtime_id);
       }
-    });
-    this.renderedEntities.forEach((runtime_id) => {
+    }
+    for (const runtime_id of this.renderedEntities) {
       const isStillVisible = visibleEntities.some(
         (entity) => entity.runtime_id === runtime_id
       );
 
       if (!isStillVisible) {
-        this.removeEntity(runtime_id)
+        this.removeEntity(runtime_id);
         this.renderedEntities.delete(runtime_id);
       }
-    });
+    }
   }
 
   applyAnimations(runtime_id) {
@@ -99,7 +98,7 @@ class FakeEntityManager {
       {
         animation: "animation.ender_dragon.neck_head_movement",
         stop_condition:
-          "v.head_rotation_x=0;v.head_rotation_y=0;v.head_rotation_z=0;v.head_position_x=(v.xbasepos*3741/8000)*math.sqrt(v.xzscale)*math.sqrt(v.scale);v.head_position_y=(10.6925+v.ybasepos*3741/8000)*math.sqrt(v.yscale)*math.sqrt(v.scale);v.head_position_z=(17.108-v.zbasepos*3741/8000)*math.sqrt(v.xzscale)*math.sqrt(v.scale);",
+          "v.head_rotation_x=90;v.head_rotation_y=0;v.head_rotation_z=0;v.head_position_x=(v.xbasepos*3741/8000)*math.sqrt(v.xzscale)*math.sqrt(v.scale);v.head_position_y=(10.6925+v.ybasepos*3741/8000)*math.sqrt(v.yscale)*math.sqrt(v.scale);v.head_position_z=(17.108-v.zbasepos*3741/8000)*math.sqrt(v.xzscale)*math.sqrt(v.scale);",
         controller: "displayentities:shift_pos",
       },
       {
@@ -124,8 +123,7 @@ class FakeEntityManager {
         controller: "displayentities:ypos",
       },
     ];
-
-    animationList.forEach(({ animation, stop_condition, controller }) => {
+    for (const { animation, stop_condition, controller } of animationList) {
       this.player.queue("animate_entity", {
         animation,
         next_state: "none",
@@ -135,7 +133,7 @@ class FakeEntityManager {
         blend_out_time: 0,
         runtime_entity_ids: [runtime_id],
       });
-    });
+    }
   }
 
   fakeAddEntity(runtime_id, position, entity_type = "minecraft:fox") {
@@ -149,10 +147,10 @@ class FakeEntityManager {
         z: position.z + 0.5,
       },
       velocity: { x: 0, y: 0, z: 0 },
-      pitch: 0,
-      yaw: 0,
-      head_yaw: 0,
-      body_yaw: 0,
+      pitch: 90,
+      yaw: 90,
+      head_yaw: 90,
+      body_yaw: 90,
       attributes: [],
       metadata: [
         {
@@ -203,10 +201,18 @@ class FakeEntityManager {
       window_id: "inventory",
     });
   }
-  removeEntity(entity_id_self){
+  removeEntity(entity_id_self) {
     this.player.queue("remove_entity", {
       entity_id_self,
     });
+  }
+  clearData() {
+    for (const element of this.renderedEntities) {
+      this.removeEntity(element);
+    }
+    const lengthFake = Object.keys(this.fakeEntities).length;
+    this.fakeEntities = {};
+    return lengthFake;
   }
 }
 
