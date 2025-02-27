@@ -1,13 +1,16 @@
 const { Relay } = require("bedrock-protocol");
 const path = require("path");
 
+const { EventEmitter } = require("events");
 const { loadJsonFromFileSync } = require("./datagenerator/gen");
 const FakeEntityManager = require("./manager/FakeEntity");
 const ModuleManager = require("./ModuleManager");
 const NbtParser = require("./manager/NbtParser");
+const FakeBlockManager = require("./manager/FakeBlock");
 
-class MinecraftRelay {
+class MinecraftRelay extends EventEmitter {
   constructor(relayOptions) {
+    super();
     this.relayOptions = relayOptions;
     this.gameData = {
       prefixChat: "§5[Schematica]§r",
@@ -28,6 +31,8 @@ class MinecraftRelay {
       this.relay.on("connect", (player) => {
         this.player = player;
         this.fakeEntityManager = new FakeEntityManager(this.player);
+        this.fakeBlockManager = new FakeBlockManager(this.player);
+
         this.handlePlayerConnection(this.player);
       });
     } catch (err) {
@@ -61,6 +66,7 @@ class MinecraftRelay {
   }
 
   handleServerboundMessage(player, name, params, des) {
+    this.emit(`serverbound-${name}`, params, des);
     switch (name) {
       case "player_auth_input":
         this.handlePlayerAuthInput(params);

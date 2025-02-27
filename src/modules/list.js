@@ -2,7 +2,7 @@ const fs = require("fs");
 const path = require("path");
 class list {
   constructor() {
-    this.name = "list";
+    this.name = ["list"];
     this.description = "Display a list of all files for .load";
   }
 

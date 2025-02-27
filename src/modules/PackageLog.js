@@ -1,7 +1,7 @@
 class PackageLog {
   constructor() {
-    this.name = "pl";
-    this.description = "PackageLog";
+    this.name = ["pl", "packageLog"];
+    this.description = "Logs the packets from server.";
   }
 
   activate(context) {

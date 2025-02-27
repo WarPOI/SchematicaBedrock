@@ -30,7 +30,7 @@ SchematicaBedrock is a project designed for working with schematics in the Bedro
 2. **Set Render Radius**
    - In the game, use the command:
      ```sh
-     .shem <number>
+     .render <number>
      ```
    - Replace `<number>` with the desired render radius.
 
@@ -45,7 +45,7 @@ SchematicaBedrock is a project designed for working with schematics in the Bedro
 
 1. In the game, set the render radius to 10:
    ```sh
-   .shem 10
+   .render 10
    ```
 2. Load the `example.nbt` file:
    ```sh

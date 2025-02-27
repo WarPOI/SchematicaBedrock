@@ -4,7 +4,7 @@ const { loadJsonFromFileSync } = require("./../datagenerator/gen");
 const dataItem = loadJsonFromFileSync("./data/dataItem.json");
 class Load {
   constructor() {
-    this.name = "load";
+    this.name = ["l", "load"];
     this.description = "<name files> <na, upload the schematic";
   }
 
@@ -18,7 +18,9 @@ class Load {
         `file: §l§4${nameFies}§r, not found`
       );
     } else {
-      const positionStart = context.authInputDataOld.position;
+      const positionStart = context.moduleManager.modules.p.posBlock
+        ? context.moduleManager.modules.p.posBlock
+        : context.authInputDataOld.position;
 
       context.fakeEntityManager.clearData();
       this.load(context, nameFies, toLoad, positionStart);
@@ -28,9 +30,9 @@ class Load {
     context.nbtParser
       .processJSONData(toLoad)
       .then((blockData) => {
-        context.nbtParser.blockData = blockData;
         context.sendTextClient(context.player, `Loading...`);
         const startTime = new Date().getTime();
+        context.nbtParser.blockData = blockData;
         const startX = Math.floor(positionStart.x);
         const startY = Math.floor(positionStart.y);
         const startZ = Math.floor(positionStart.z);

@@ -4,10 +4,13 @@ const path = require("path");
 class ModuleManager {
   constructor() {
     this.modules = {};
+
     this.activate = {
       packageLog: false,
       schematica: false,
     };
+
+    this.commandMap = new Map();
   }
 
   loadModules(directory) {
@@ -18,7 +21,13 @@ class ModuleManager {
         if (file.endsWith(".js")) {
           const moduleClass = require(path.join(directory, file));
           const moduleInstance = new moduleClass();
-          this.modules[moduleInstance.name] = moduleInstance;
+          this.modules[moduleInstance.name[0]] = moduleInstance;
+        }
+      }
+      for (const moduleName in this.modules) {
+        const module = this.modules[moduleName];
+        for (const cmd of module.name) {
+          this.commandMap.set(cmd, module);
         }
       }
     } catch (error) {
@@ -27,13 +36,16 @@ class ModuleManager {
   }
 
   handleCommand(command, context) {
-    const name = command[0];
-    const module = this.modules[name];
+    const prefixCommand = command[0];
+    const module = this.commandMap.get(prefixCommand);
 
     if (module) {
       module.activate(context, command);
     } else {
-      context.sendTextClient(context.player, `command §l${name}§r not found`);
+      context.sendTextClient(
+        context.player,
+        `command §l${prefixCommand}§r not found`
+      );
     }
   }
 }

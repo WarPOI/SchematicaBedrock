@@ -1,9 +1,10 @@
 const { loadJsonFromFileSync } = require("../datagenerator/gen");
 const dataItem = loadJsonFromFileSync("./data/dataItem.json");
-class Schematica {
+class Render {
   constructor() {
-    this.name = "shem";
+    this.name = ["r", "render"];
     this.description = "<namber> - Render radius";
+    this.testInterval = null;
   }
 
   activate(context, command) {
@@ -23,4 +24,4 @@ class Schematica {
   }
 }
 
-module.exports = Schematica;
+module.exports = Render;
