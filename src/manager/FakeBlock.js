@@ -3,24 +3,22 @@ class FakeBlockManager {
     this.player = player;
   }
 
-  updateBlock(position, block_runtime_id = -276252898) {
-    console.log("updateBlock", position);
+  updateBlock(position, block_runtime_id = 388079635) {
     this.player.queue("update_block", {
       position,
       block_runtime_id,
       flags: {
-        _value: 19,
+        _value: 3,
         neighbors: true,
         network: true,
         no_graphic: false,
         unused: false,
-        priority: true,
+        priority: false,
       },
       layer: 0,
     });
   }
   blockEntityData(position) {
-    console.log("position", position);
     this.player.queue("block_entity_data", {
       position,
       nbt: {
@@ -69,7 +67,7 @@ class FakeBlockManager {
           },
           lastTouchedPlayerId: {
             type: "long",
-            value: -17179869177,
+            value: -1,
           },
           mirror: {
             type: "byte",
@@ -109,7 +107,7 @@ class FakeBlockManager {
           },
           xStructureSize: {
             type: "int",
-            value: 10,
+            value: 5,
           },
           y: {
             type: "int",

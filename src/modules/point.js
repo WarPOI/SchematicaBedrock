@@ -22,19 +22,16 @@ class Point {
             context.player,
             `§aPoint selected x:${block_position.x} y:${block_position.y} z:${block_position.z}`
           );
-          // if (this.posBlock) {
-          //   context.fakeBlockManager.updateBlock(
-          //     this.posBlock,
-          //     this.blockRuntimeId
-          //   );
-          // }
+          if (this.posBlock) {
+            context.fakeBlockManager.updateBlock(
+              this.posBlock,
+              this.blockRuntimeId
+            );
+          }
           this.posBlock = block_position;
           this.blockRuntimeId = block_runtime_id;
-          // context.fakeBlockManager.blockEntityData(this.posBlock);
-          // context.fakeBlockManager.updateBlock(
-          //   this.posBlock,
-          //   this.blockRuntimeId
-          // );
+          context.fakeBlockManager.blockEntityData(this.posBlock);
+          context.fakeBlockManager.updateBlock(this.posBlock);
         }
       }
     };
